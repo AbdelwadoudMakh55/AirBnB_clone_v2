@@ -1,0 +1,5 @@
+# Ignoring some files
+
+__pycache__
+file.json
+test_params_create
