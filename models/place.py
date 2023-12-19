@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
+<<<<<<< HEAD
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship
 from models.amenity import Amenity
@@ -89,3 +90,23 @@ class Place(BaseModel, Base):
             """Setter document"""
             if isinstance(amenity, Amenity):
                 self.amenity_ids.append(amenity.id)
+=======
+from sqlalchemy import Column, Integer, String, ForeignKey, Float
+from sqlalchemy.orm import relationship
+
+
+class Place(BaseModel):
+    """ A place to stay """
+    __tablename__ = 'places'
+    city_id = Column(String(60), nullable=False, ForeignKey("cities.id"))
+    user_id = Column(String(60), nullable=False, ForeignKey("users.id"))
+    name = Column(String(128), nullable=False)
+    description = Column(String(1024))
+    number_rooms = Column(Integer, nullable=False, default=0)
+    number_bathrooms = Column(Integer, nullable=False, default=0)
+    max_guest = Column(Integer, nullable=False, default=0)
+    price_by_night = Column(Integer, nullable=False, default=0)
+    latitude = Column(Float)
+    longitude = Column(Float)
+    reviews = relationship("Review", backref="place")
+>>>>>>> 791d92177282905c456674d2e47566bb57506da0

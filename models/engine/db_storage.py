@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+<<<<<<< HEAD
 """Defines the DBStorage engine."""
 from os import getenv
 from models.base_model import Base
@@ -21,11 +22,19 @@ class DBStorage:
         __engine (sqlalchemy.Engine): The working SQLAlchemy engine.
         __session (sqlalchemy.Session): The working SQLAlchemy session.
     """
+=======
+""" This is the db_storage module """
+from sqlalchemy import create_engine
+import os
+
+class DBStorage:
+>>>>>>> 791d92177282905c456674d2e47566bb57506da0
 
     __engine = None
     __session = None
 
     def __init__(self):
+<<<<<<< HEAD
         """Initialize a new DBStorage instance."""
         self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".
                                       format(getenv("HBNB_MYSQL_USER"),
@@ -65,10 +74,49 @@ class DBStorage:
 
     def delete(self, obj=None):
         """Delete obj from the current database session."""
+=======
+        """ Instantiation of engine """
+        user = os.getenv(HBNB_MYSQL_USER)
+        pwd = os.getenv(HBNB_MYSQL_PWD)
+        host = os.getenv(HBNB_MYSQL_HOST)
+        db = os.getenv(HBNB_MYSQL_DB)
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
+                                      .format(user, pwd, host, db),
+                                      pool_pre_ping=True)
+        env = os.getenv(HBNB_ENV)
+        if env == 'test':
+            Base.metadata.drop_all(self.__engine)
+
+    def all(self, cls=None):
+        """ Returning the objects """
+        if cls is not None:
+            objs = {}
+            for obj in self.__session.query(cls).all():
+                objs[cls.__name__ + "." + obj.id] = obj
+            return objs
+        else:
+            objs = {}
+            for obj in self.__session.query(User, State, City, Amenity, Place,
+                                     Review).all():
+                objs[cls.__name__ + "." + obj.id] = obj
+            return objs
+
+    def new(self, obj):
+        """ Adding new objects """
+        self.__session.add(obj)
+
+    def save(self):
+        """ Commiting changes """
+        self.__session.commit()
+
+    def delete(self, obj=None):
+        """ Delete obj if not None """
+>>>>>>> 791d92177282905c456674d2e47566bb57506da0
         if obj is not None:
             self.__session.delete(obj)
 
     def reload(self):
+<<<<<<< HEAD
         """Create all tables in the database and initialize a new session."""
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(bind=self.__engine,
@@ -79,3 +127,18 @@ class DBStorage:
     def close(self):
         """Close the working SQLAlchemy session."""
         self.__session.close()
+=======
+        """ Create the tables in the database """
+        from sqlalchemy.orm import sessionmaker
+        from models.base_model import BaseModel, Base
+        from models.state import State
+        from models.city import City
+        from models.review import Review
+        from models.amenity import Amenity
+        from models.place import Place
+        Base.metadata.create_all(self.__engine)
+        Session = sessionmaker(expire_on_commit=True)
+        Session = scoped_session(Session)
+        Session.configure(bind=self.__engine)
+        self.__session = Session()
+>>>>>>> 791d92177282905c456674d2e47566bb57506da0
