@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" State Module for HBNB project """
+"""Defines the State class."""
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
@@ -13,6 +13,7 @@ class State(BaseModel, Base):
 
     @property
     def cities(self):
+        """ Cities getter """
         from models import storage
         obj_list = storage.all(City)
         cities = []
