@@ -23,6 +23,12 @@ class DBStorage:
 
     def all(self, cls=None):
         """ Returning the objects """
+        from models.user import User
+        from models.state import State
+        from models.city import City
+        from models.review import Review
+        from models.amenity import Amenity
+        from models.place import Place
         if cls is not None:
             objs = {}
             for obj in self.__session.query(cls).all():
@@ -32,7 +38,7 @@ class DBStorage:
             objs = {}
             for obj in self.__session.query(User, State, City, Amenity, Place,
                                      Review).all():
-                objs[cls.__name__ + "." + obj.id] = obj
+                objs[cls.__name__ + "." + str(obj.id)] = obj
             return objs
 
     def new(self, obj):
