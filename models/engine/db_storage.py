@@ -10,10 +10,10 @@ class DBStorage:
 
     def __init__(self):
         """ Instantiation of engine """
-        user = os.getenv(HBNB_MYSQL_USER)
-        pwd = os.getenv(HBNB_MYSQL_PWD)
-        host = os.getenv(HBNB_MYSQL_HOST)
-        db = os.getenv(HBNB_MYSQL_DB)
+        user = os.getenv('HBNB_MYSQL_USER')
+        pwd = os.getenv('HBNB_MYSQL_PWD')
+        host = os.getenv('HBNB_MYSQL_HOST')
+        db = os.getenv('HBNB_MYSQL_DB')
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
                                       .format(user, pwd, host, db),
                                       pool_pre_ping=True)

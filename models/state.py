@@ -14,10 +14,9 @@ class State(BaseModel, Base):
     @property
     def cities(self):
         from models import storage
-        obj_list = storage.all()
+        obj_list = storage.all(City)
         cities = []
         for obj in obj_list:
-            if type(obj) is City:
-                if obj.state_id == self.id:
-                    cities.append(obj)
+            if obj.state_id == self.id:
+                cities.append(obj)
         return cities
