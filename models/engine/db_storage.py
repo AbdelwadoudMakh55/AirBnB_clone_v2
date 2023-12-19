@@ -17,7 +17,7 @@ class DBStorage:
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
                                       .format(user, pwd, host, db),
                                       pool_pre_ping=True)
-        env = os.getenv(HBNB_ENV)
+        env = os.getenv('HBNB_ENV')
         if env == 'test':
             Base.metadata.drop_all(self.__engine)
 
@@ -50,8 +50,9 @@ class DBStorage:
 
     def reload(self):
         """ Create the tables in the database """
-        from sqlalchemy.orm import sessionmaker
+        from sqlalchemy.orm import sessionmaker, scoped_session
         from models.base_model import BaseModel, Base
+        from models.user import User
         from models.state import State
         from models.city import City
         from models.review import Review
