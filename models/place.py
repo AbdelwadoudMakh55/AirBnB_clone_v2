@@ -29,15 +29,14 @@ class Place(BaseModel, Base):
             if obj.place_id == self.id:
                 review.append(obj)
         return review
-
-    place_amenity = Table(place_amenity, Base.metadata,
-            column("place_id", String(60), ForeignKey("places.id"),
+    """place_amenity = Table("place_amenity", Base.metadata,
+            Column("place_id", String(60), ForeignKey("places.id"),
                    primary_key=True, nullable=False),
-            column("amenity_id", String(60), ForeignKey("amenities.id"),
+            Column("amenity_id", String(60), ForeignKey("amenities.id"),
                    primary_key=True, nullable=False)
     )
     amenities = relationship("Amenity", secondary=place_amenity,
-                             view_only=False)
+                             backref="place", viewonly=False)
     @property
     def amenities(self):
         return Place.amenity_ids
@@ -46,4 +45,4 @@ class Place(BaseModel, Base):
     def amenities(self, value):
         from models.amenity import Amenity
         if type(value) is Amenity:
-            Place.amenity_ids.append(value.id)
+            Place.amenity_ids.append(value.id)"""
