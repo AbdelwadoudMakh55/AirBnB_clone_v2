@@ -8,3 +8,4 @@ class Amenity(BaseModel, Base):
     """ This is the amenity class """
     __tablename__ = "amenities"
     name = Column(String(128), nullable=False)
+    place_amenities = relationship("Place", secondary=place_amenity)

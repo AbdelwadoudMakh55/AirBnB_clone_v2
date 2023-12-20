@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ This is the place module """
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, Integer, String, ForeignKey, Float
+from sqlalchemy import Column, Integer, String, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship
 
 
@@ -18,6 +18,7 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, nullable=False, default=0)
     latitude = Column(Float)
     longitude = Column(Float)
+    amenity_ids = []
     reviews = relationship("Review", backref="place")
     
     @property
@@ -28,3 +29,21 @@ class Place(BaseModel, Base):
             if obj.place_id == self.id:
                 review.append(obj)
         return review
+
+    place_amenity = Table(place_amenity, Base.metadata,
+            column("place_id", String(60), ForeignKey("places.id"),
+                   primary_key=True, nullable=False),
+            column("amenity_id", String(60), ForeignKey("amenities.id"),
+                   primary_key=True, nullable=False)
+    )
+    amenities = relationship("Amenity", secondary=place_amenity,
+                             view_only=False)
+    @property
+    def amenities(self):
+        return Place.amenity_ids
+
+    @amenities.setter
+    def amenities(self, value):
+        from models.amenity import Amenity
+        if type(value) is Amenity:
+            Place.amenity_ids.append(value.id)
