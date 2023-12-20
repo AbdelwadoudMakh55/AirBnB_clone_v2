@@ -19,3 +19,12 @@ class Place(BaseModel, Base):
     latitude = Column(Float)
     longitude = Column(Float)
     reviews = relationship("Review", backref="place")
+    
+    @property
+    def reviews(self):
+        review = []
+        from models import storage
+        for obj in storage.all(Review):
+            if obj.place_id == self.id:
+                review.append(obj)
+        return review
