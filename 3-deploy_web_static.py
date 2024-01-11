@@ -4,7 +4,7 @@ This is the full deployment module
 """
 
 
-from fabric.api import local
+from fabric.api import *
 from datetime import datetime
 env.hosts = ['52.91.182.154', '34.202.164.102']
 env.user = 'ubuntu'
