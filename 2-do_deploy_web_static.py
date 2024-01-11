@@ -13,6 +13,7 @@ env.key_filename = '~/.ssh/id_rsa'
 
 
 def do_deploy(archive_path):
+    """ This is the function for deploying the content """
     if os.path.exists(archive_path) is False:
         return False
     try:
