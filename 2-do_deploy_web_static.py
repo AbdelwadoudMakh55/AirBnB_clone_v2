@@ -4,14 +4,17 @@ This is the 2-do_deploy_web_static.py module:
     - This file is used to deploy the static content to the server.
 """
 from fabric.api import put, run, env
+import os
 env.hosts = ['52.91.182.154', '34.202.164.102']
 env.user = 'ubuntu'
 env.key_filename = "~/.ssh/id_rsa"
 
 
 def do_deploy(archive_path):
-    """ This is the function for deploying the static content """
-    import os
+    """
+    This is the function for deploying the static content:
+    To the web servers: on 52.91.182.154, 34.202.164.102
+    """
     if os.path.exists(archive_path) is False:
         return False
     path = archive_path.split('/')
