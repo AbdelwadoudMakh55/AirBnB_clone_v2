@@ -4,6 +4,7 @@ This is the 2-do_deploy_web_static.py module.
 This module distribute the static content (html, css, images) to the servers
 """
 
+from fabric.api import put, run, env, task
 from fabric.api import put, run, env
 import os
 env.hosts = ['52.91.182.154', '34.202.164.102']
@@ -12,23 +13,25 @@ env.key_filename = '~/.ssh/id_rsa'
 
 
 def do_deploy(archive_path):
-    """This is the function for deploying the static content"""
     if os.path.exists(archive_path) is False:
         return False
     try:
-        path_ = "/data/web_static/releases/"
-        s_link = "/data/releases/current"
-        filename = archive_path.split('/')[1]
-        no_ext = filename.split('.')[0]
-        p_n_x = path_ + no_ext + "/"
-        put(archive_path, "/tmp/", use_sudo=True)
-        run("mkdir -p " + p_n_x)
-        run("tar -xzf /tmp/" + filename + " -C " + p_n_x)
-        run("rm -rf /tmp/" + filename)
-        run("mv " + p_n_x + "web_static/* " + p_n_x)
-        run("rm -rf " + p_n_x + "/web_static")
-        run("rm -rf " + s_link)
-        run("ln -s " + p_n_x + " " + s_link)
+        path = archive_path.split('/')
+        file_name = path[1]
+        file_name = archive_path.split('/')[1]
+        no_ext = file_name.split('.')[0]
+        put(archive_path, "/tmp/")
+        run("mkdir -p /data/web_static/releases/" + no_ext + "/")
+        run("tar -xzf /tmp/" + file_name + " -C /data/web_static/releases/"
+            + no_ext + "/")
+        run("rm -rf /tmp/" + file_name)
+        run("mv /data/web_static/releases/" + no_ext + "/web_static/*"
+            + " /data/web_static/releases/" + no_ext + "/")
+        run("rm -rf /tmp/" + file_name)
+        run("rm -rf /data/web_static/releases/" + no_ext + "/web_static")
+        run("rm -rf /data/web_static/current")
+        run("ln -s /data/web_static/releases/" + no_ext + "/ "
+            + "/data/web_static/current")
         return True
     except Exception:
         return False
