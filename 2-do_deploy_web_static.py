@@ -2,8 +2,6 @@
 """
 This module distribute the static content (html, css, images) to the servers
 """
-
-
 from fabric.api import put, run, env, task
 import os
 
@@ -25,10 +23,10 @@ def do_deploy(archive_path):
         run(f"mkdir -p /data/web_static/releases/{no_ext}/")
         run(f"tar -xzf /tmp/{filename} -C /data/web_static/releases/{no_ext}/")
         run(f"mv /data/web_static/releases/{no_ext}/web_static/*"
-            + " /data/web_static/releases/{no_ext}/")
+            + f" /data/web_static/releases/{no_ext}/")
         run(f"rm -rf /tmp/{filename}")
         run(f"rm -rf /data/web_static/current")
-        run(f"ln -s /data/web_static/releases/{no_ext}/"
+        run(f"ln -sf /data/web_static/releases/{no_ext}/"
             + " /data/web_static/current")
         return True
     except Exception:
