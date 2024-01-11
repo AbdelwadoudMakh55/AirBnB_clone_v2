@@ -58,4 +58,4 @@ def deploy():
     if exists(path) is False:
         return False
     r_value = do_deploy(path)
-    return r
+    return r_value
