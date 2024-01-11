@@ -13,7 +13,7 @@ env.key_filename = "~/.ssh/id_rsa"
 
 @task
 def do_deploy(archive_path):
-    """ This is the function for deploying the static content """
+    """This is the function for deploying the static content"""
     if os.path.exists(archive_path) is False:
         return False
     path = archive_path.split('/')
