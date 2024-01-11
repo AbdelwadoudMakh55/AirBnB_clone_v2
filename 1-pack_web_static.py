@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""" This is the 1-pack_web_static module """
+""" 
+This is the 1-pack_web_static module
+"""
 
 
 from fabric.api import local
