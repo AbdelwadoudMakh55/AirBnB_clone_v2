@@ -18,7 +18,7 @@ def do_deploy(archive_path):
     try:
         path_ = "/data/web_static/releases/"
         s_link = "/data/releases/current"
-        filename = archive_path.split('/')[-1]
+        filename = archive_path.split('/')[1]
         no_ext = filename.split('.')[0]
         p_n_x = path_ + no_ext + "/"
         put(archive_path, "/tmp/", use_sudo=True)
