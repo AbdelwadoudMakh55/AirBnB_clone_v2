@@ -19,6 +19,7 @@ def do_deploy(archive_path):
     try:
         file_name = archive_path.split('/')[1]
         no_ext = file_name.split('.')[0]
+        sym_link = "/data/web_static/current"
         put(archive_path, "/tmp/")
         run("mkdir -p /data/web_static/releases/" + no_ext + "/")
         run("tar -xzf /tmp/" + file_name + " -C /data/web_static/releases/"
@@ -28,9 +29,8 @@ def do_deploy(archive_path):
             + " /data/web_static/releases/" + no_ext + "/")
         run("rm -rf /tmp/" + file_name)
         run("rm -rf /data/web_static/releases/" + no_ext + "/web_static")
-        run("rm -rf /data/web_static/current")
-        run("ln -s /data/web_static/releases/" + no_ext + "/ "
-            + "/data/web_static/current")
+        run(f"rm -rf {sym_link}")
+        run("ln -s /data/web_static/releases/" + no_ext + "/ " + sym_link)
         return True
     except Exception:
         return False
