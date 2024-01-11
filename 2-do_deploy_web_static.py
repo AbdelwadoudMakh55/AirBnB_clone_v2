@@ -16,12 +16,14 @@ def do_deploy(archive_path):
         path = archive_path.split('/')
         file_name = path[1]
         no_ext = file_name.split('.')[0]
-        put("./" + archive_path, "/tmp/" + file_name, use_sudo=True)
+        put(archive_path, "/tmp/" + file_name, use_sudo=True)
         run("mkdir -p /data/web_static/releases/" + no_ext + "/")
         run("tar -xzf /tmp/" + file_name + " -C /data/web_static/releases/"
             + no_ext + "/")
-        run("mv /data/web_static/releases/" + no_ext + "/web_static/*"
-            + " /data/web_static/releases/" + no_ext + "/")
+        directory = os.listdir("/data/web_static/releases/" + no_ext)
+        if len(directory) == 0:
+            run("mv /data/web_static/releases/" + no_ext + "/web_static/*"
+                + " /data/web_static/releases/" + no_ext + "/")
         run("rm -rf /tmp/" + file_name)
         run("rm -rf /data/web_static/current")
         run("ln -sf /data/web_static/releases/" + no_ext + "/ "
