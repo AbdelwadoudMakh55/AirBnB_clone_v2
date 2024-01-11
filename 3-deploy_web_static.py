@@ -14,18 +14,21 @@ env.key_filename = "~/.ssh/id_rsa"
 
 def do_pack():
     """ Compressing the web_static files into .tgz """
-    current_date = datetime.now()
-    year = str(current_date.year)
-    month = str(current_date.month)
-    day = str(current_date.day)
-    hour = str(current_date.hour)
-    min = str(current_date.minute)
-    sec = str(current_date.second)
-    file_name = "web_static_" + year + month + day + hour + min + sec + ".tgz"
-    local("mkdir -p versions")
-    local("tar -cvzf versions/" + file_name + " web_static")
-    path = "version/" + file_name
-    return path
+    try:
+        current_date = datetime.now()
+        year = str(current_date.year)
+        month = str(current_date.month)
+        day = str(current_date.day)
+        hour = str(current_date.hour)
+        min = str(current_date.minute)
+        sec = str(current_date.second)
+        file_n = "web_static_" + year + month + day + hour + min + sec + ".tgz"
+        local("mkdir -p versions")
+        local("tar -cvzf versions/" + file_n + " web_static")
+        path = "version/" + file_n
+        return path
+    except Exception:
+        return None
 
 
 def do_deploy(archive_path):
@@ -54,6 +57,6 @@ def do_deploy(archive_path):
 def deploy():
     """ Full deployment """
     path = do_pack()
-    if not path:
+    if path is None:
         return False
     return do_deploy(path)
