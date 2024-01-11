@@ -1,6 +1,9 @@
 #!/usr/bin/python3
-""" This is the 2-do_deploy_web_static.py module """
-from fabric.api import *
+"""
+This is the 2-do_deploy_web_static.py module:
+    - This file is used to deploy the static content to the server.
+"""
+from fabric.api import put, run
 env.hosts = ['52.91.182.154', '34.202.164.102']
 env.user = 'ubuntu'
 env.key_filename = "~/.ssh/id_rsa"
