@@ -24,8 +24,9 @@ def do_deploy(archive_path):
         run("mv /data/web_static/releases/" + no_ext + "/web_static/*"
             + " /data/web_static/releases/" + no_ext + "/")
         run("rm -rf /tmp/" + file_name)
+        run("rm -rf /data/web_static/releases/" + no_ext + "/web_static")
         run("rm -rf /data/web_static/current")
-        run("ln -sf /data/web_static/releases/" + no_ext + "/ "
+        run("ln -s /data/web_static/releases/" + no_ext + "/ "
             + "/data/web_static/current")
         return True
     except Exception:
