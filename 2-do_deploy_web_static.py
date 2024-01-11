@@ -4,8 +4,8 @@ This is the 2-do_deploy_web_static.py module.
 This module distribute the static content (html, css, images) to the servers
 """
 
+
 from fabric.api import put, run, env, task
-from fabric.api import put, run, env
 import os
 env.hosts = ['52.91.182.154', '34.202.164.102']
 env.user = 'ubuntu'
