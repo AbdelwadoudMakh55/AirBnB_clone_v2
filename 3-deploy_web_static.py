@@ -53,7 +53,7 @@ def do_deploy(archive_path):
     except Exception:
         return False
 
-
+@task
 def deploy():
     """ Full deployment """
     path = do_pack()
