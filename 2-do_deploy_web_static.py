@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 """
 This is the 2-do_deploy_web_static.py module:
-    - This file is used to deploy the static content to the server.
-"""
+    - This file is used to deploy the static content to the server."""
 
 
 from fabric.api import put, run, env, task
