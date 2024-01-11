@@ -18,16 +18,17 @@ def do_deploy(archive_path):
     try:
         path_ = "/data/web_static/releases/"
         s_link = "/data/releases/current"
-        filename = archive_path.split('/')[1]
+        filename = archive_path.split('/')[-1]
         no_ext = filename.split('.')[0]
-        put(archive_path, "/tmp/")
-        run(f"mkdir -p {path_}{no_ext}/")
-        run(f"tar -xzf /tmp/{filename} -C {path_}{no_ext}/")
-        run(f"rm -rf /tmp/{filename}")
-        run(f"mv {path_}{no_ext}/web_static/* {path_}{no_ext}/")
-        run(f"rm -rf {path_}{no_ext}/web_static")
-        run(f"rm -rf {s_link}")
-        run(f"ln -s {path_s}{no_ext}/ {s_link}")
+        p_n_x = path_ + no_ext + "/"
+        put(archive_path, "/tmp/", use_sudo=True)
+        run("mkdir -p " + p_n_x)
+        run("tar -xzf /tmp/" + filename + " -C " + p_n_x)
+        run("rm -rf /tmp/" + filename)
+        run("mv " + p_n_x + "web_static/* " + p_n_x)
+        run("rm -rf " + p_n_x + "/web_static")
+        run("rm -rf " + s_link)
+        run("ln -s " + p_n_x + " " + s_link)
         return True
     except Exception:
         return False
