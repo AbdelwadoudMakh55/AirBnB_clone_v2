@@ -20,7 +20,7 @@ def do_deploy(archive_path):
     try:
         path = archive_path.split('/')
         filename = path[1]
-        no_ext = file_name.split('.')[0]
+        no_ext = filename.split('.')[0]
         put(f"./{archive_path}", f"/tmp/{filename}", use_sudo=True)
         run(f"mkdir -p /data/web_static/releases/{no_ext}/")
         run(f"tar -xzf /tmp/{filename} -C /data/web_static/releases/{no_ext}/")
