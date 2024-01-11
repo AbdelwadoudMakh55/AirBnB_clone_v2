@@ -51,7 +51,7 @@ def do_deploy(archive_path):
 @task
 def deploy():
     """ Full deployment """
-    path = do_pack()
-    if not path:
-        return False
-    do_deploy(path)
+    path = execute(do_pack)
+    for host in env.hosts:
+        with settings(host_string=host):
+            do_deploy(path[host])
