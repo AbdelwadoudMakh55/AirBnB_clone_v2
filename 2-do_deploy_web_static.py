@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 """ This is the 2-do_deploy_web_static.py module """
-
-
 from fabric.api import *
 env.hosts = ['52.91.182.154', '34.202.164.102']
 env.user = 'ubuntu'
