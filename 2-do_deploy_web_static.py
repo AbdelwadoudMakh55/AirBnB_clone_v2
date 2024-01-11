@@ -7,6 +7,8 @@ This module distribute the static content (html, css, images) to the servers
 from fabric.api import put, run, env, task
 import os
 env.hosts = ['52.91.182.154', '34.202.164.102']
+env.user = 'ubuntu'
+env.key_filename = '~/.ssh/id_rsa'
 
 
 def do_deploy(archive_path):
