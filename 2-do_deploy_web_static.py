@@ -17,8 +17,6 @@ def do_deploy(archive_path):
     if os.path.exists(archive_path) is False:
         return False
     try:
-        path = archive_path.split('/')
-        file_name = path[1]
         file_name = archive_path.split('/')[1]
         no_ext = file_name.split('.')[0]
         put(archive_path, "/tmp/")
