@@ -29,7 +29,7 @@ def do_deploy(archive_path):
             + " /data/web_static/releases/" + no_ext + "/")
         run("rm -rf /tmp/" + file_name)
         run("rm -rf /data/web_static/releases/" + no_ext + "/web_static")
-        run(f"rm -rf {sym_link}")
+        run("rm -rf " + sym_link)
         run("ln -s /data/web_static/releases/" + no_ext + "/ " + sym_link)
         return True
     except Exception:
