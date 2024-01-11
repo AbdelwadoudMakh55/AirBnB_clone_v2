@@ -19,18 +19,17 @@ def do_deploy(archive_path):
         return False
     try:
         path = archive_path.split('/')
-        file_name = path[1]
+        filename = path[1]
         no_ext = file_name.split('.')[0]
-        put("./" + archive_path, "/tmp/" + file_name, use_sudo=True)
-        run("mkdir -p /data/web_static/releases/" + no_ext + "/")
-        run("tar -xzf /tmp/" + file_name + " -C /data/web_static/releases/"
-            + no_ext + "/")
-        run("mv /data/web_static/releases/" + no_ext + "/web_static/*"
-            + " /data/web_static/releases/" + no_ext + "/")
-        run("rm -rf /tmp/" + file_name)
-        run("rm -rf /data/web_static/current")
-        run("ln -sf /data/web_static/releases/" + no_ext + "/ "
-            + "/data/web_static/current")
+        put(f"./{archive_path}", f"/tmp/{filename}", use_sudo=True)
+        run(f"mkdir -p /data/web_static/releases/{no_ext}/")
+        run(f"tar -xzf /tmp/{filename} -C /data/web_static/releases/{no_ext}/")
+        run(f"mv /data/web_static/releases/{no_ext}/web_static/*"
+            + " /data/web_static/releases/{no_ext}/")
+        run(f"rm -rf /tmp/{filename}")
+        run(f"rm -rf /data/web_static/current")
+        run(f"ln -s /data/web_static/releases/{no_ext}/"
+            + " /data/web_static/current")
         return True
     except Exception:
         return False
