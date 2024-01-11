@@ -4,7 +4,6 @@ This module distribute the static content (html, css, images) to the servers"""
 
 
 from fabric.api import put, run, env, task
-import os
 env.hosts = ['52.91.182.154', '34.202.164.102']
 env.user = 'ubuntu'
 env.key_filename = "~/.ssh/id_rsa"
@@ -21,10 +20,8 @@ def do_deploy(archive_path):
         run("mkdir -p /data/web_static/releases/" + no_ext + "/")
         run("tar -xzf /tmp/" + file_name + " -C /data/web_static/releases/"
             + no_ext + "/")
-        directory = os.listdir("/data/web_static/releases/" + no_ext)
-        if len(directory) == 0:
-            run("mv /data/web_static/releases/" + no_ext + "/web_static/*"
-                + " /data/web_static/releases/" + no_ext + "/")
+        run("mv /data/web_static/releases/" + no_ext + "/web_static/*"
+            + " /data/web_static/releases/" + no_ext + "/")
         run("rm -rf /tmp/" + file_name)
         run("rm -rf /data/web_static/current")
         run("ln -sf /data/web_static/releases/" + no_ext + "/ "
