@@ -6,6 +6,7 @@ This is the full deployment module
 
 from fabric.api import *
 from datetime import datetime
+import os
 env.hosts = ['52.91.182.154', '34.202.164.102']
 env.user = 'ubuntu'
 env.key_filename = "~/.ssh/id_rsa"
@@ -53,4 +54,4 @@ def deploy():
     path = do_pack()
     if not path:
         return False
-    do_deploy()
+    do_deploy(path)
