@@ -12,7 +12,6 @@ env.user = 'ubuntu'
 env.key_filename = "~/.ssh/id_rsa"
 
 
-@task
 def do_pack():
     """ Compressing the web_static files into .tgz """
     current_date = datetime.now()
@@ -29,14 +28,15 @@ def do_pack():
     return path
 
 
-@task
 def do_deploy(archive_path):
     """This is the function for deploying the static content"""
+    if os.path.exists(archive_path) is False:
+        return False
     try:
         path = archive_path.split('/')
         file_name = path[1]
         no_ext = file_name.split('.')[0]
-        put(archive_path, "/tmp/" + file_name, use_sudo=True)
+        put(archive_path, "/tmp/")
         run("mkdir -p /data/web_static/releases/" + no_ext + "/")
         run("tar -xzf /tmp/" + file_name + " -C /data/web_static/releases/"
             + no_ext + "/")
@@ -51,11 +51,9 @@ def do_deploy(archive_path):
         return False
 
 
-@task
 def deploy():
     """ Full deployment """
     path = do_pack()
-    if exists(path) is False:
+    if not path:
         return False
-    r_value = do_deploy(path)
-    return r_value
+    return do_deploy(path)
