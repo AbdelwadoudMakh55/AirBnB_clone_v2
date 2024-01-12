@@ -25,7 +25,7 @@ def do_pack():
         file_n = "web_static_" + year + month + day + hour + min + sec + ".tgz"
         local("mkdir -p versions")
         local("tar -cvzf versions/" + file_n + " web_static")
-        path = "version/" + file_n
+        path = "versions/" + file_n
         return path
     except Exception:
         return None
@@ -53,10 +53,11 @@ def do_deploy(archive_path):
     except Exception:
         return False
 
-@task
+
 def deploy():
     """ Full deployment """
     path = do_pack()
     if path is None:
         return False
-    return do_deploy(path)
+    r_value = do_deploy(path)
+    return r_value
