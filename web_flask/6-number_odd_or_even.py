@@ -59,5 +59,12 @@ def template(n):
     """ This is the number_template """
     return render_template('5-number.html', n=n)
 
+
+@app.route("/number_odd_or_even/<int:n>")
+def odd_even(n):
+    """ This is the odd_even template """
+    return render_template("6-number_odd_or_even.html", n=n)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
