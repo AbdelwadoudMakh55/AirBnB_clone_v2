@@ -6,3 +6,4 @@ test_params_create
 main_delete.py
 *.tgz
 test.py
+*main.py

@@ -21,11 +21,24 @@ class BaseModel:
             self.created_at = datetime.utcnow()
             self.updated_at = datetime.utcnow()
         else:
-            kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
-            kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
-            del kwargs['__class__']
+            if 'id' not in kwargs.keys():
+                kwargs['id'] = str(uuid.uuid4())
+            if 'updated_at' in kwargs.keys():
+                kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
+                                                        '%Y-%m-%dT%H:%M:%S.%f')
+            else:
+                kwargs['updated_at'] = datetime.utcnow().isoformat()
+                kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
+                                                        '%Y-%m-%dT%H:%M:%S.%f')
+            if 'created_at' in kwargs.keys():
+                kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
+                                                        '%Y-%m-%dT%H:%M:%S.%f')
+            else:
+                kwargs['created_at'] = datetime.utcnow().isoformat()
+                kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
+                                                        '%Y-%m-%dT%H:%M:%S.%f')
+            if '__class__' in kwargs.keys():
+                del kwargs['__class__']
             self.__dict__.update(kwargs)
 
 

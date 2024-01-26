@@ -15,9 +15,10 @@ class State(BaseModel, Base):
     def cities(self):
         """ Cities getter """
         from models import storage
+        from models.city import City
         obj_list = storage.all(City)
         cities = []
-        for obj in obj_list:
-            if obj.state_id == self.id:
-                cities.append(obj)
+        for key in obj_list.keys():
+            if obj_list[key].state_id == self.id:
+                cities.append(obj_list[key])
         return cities
