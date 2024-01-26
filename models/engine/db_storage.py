@@ -3,6 +3,7 @@
 from sqlalchemy import create_engine
 import os
 
+
 class DBStorage:
 
     __engine = None
@@ -37,7 +38,7 @@ class DBStorage:
         else:
             objs = {}
             for obj in self.__session.query(User, State, City, Amenity, Place,
-                                     Review).all():
+                                            Review).all():
                 objs[cls.__name__ + "." + str(obj.id)] = obj
             return objs
 
@@ -69,3 +70,7 @@ class DBStorage:
         Session = scoped_session(Session)
         Session.configure(bind=self.__engine)
         self.__session = Session()
+
+    def close(self):
+        """ Close method """
+        self.__session.remove()

@@ -7,7 +7,7 @@ class FileStorage:
     """This class manages storage of hbnb models in JSON format"""
     __file_path = 'file.json'
     __objects = {}
-    
+
     def delete(self, obj=None):
         """Deletes an object from __objects"""
         if obj is not None:
@@ -70,3 +70,6 @@ class FileStorage:
                 if FileStorage.__objects[key].id == obj.id:
                     ob_to_delete = key
             del FileStorage.__objects[ob_to_delete]
+
+    def close(self):
+        self.reload()
