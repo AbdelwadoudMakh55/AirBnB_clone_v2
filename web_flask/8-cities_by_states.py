@@ -13,15 +13,16 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 
+@app.teardown_appcontext
+def teardown_appcontext(exception):
+    """ Removing the session """
+    storage.close()
+
+
 @app.route("/cities_by_states")
 def states_list():
     states = storage.all(State)
     return render_template("8-cities_by_states.html", states=states)
-
-
-@app.teardown_appcontext
-def teardown_appcontext(error=None):
-    storage.close()
 
 
 if __name__ == '__main__':
