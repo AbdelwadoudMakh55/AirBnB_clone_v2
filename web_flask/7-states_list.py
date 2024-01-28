@@ -17,7 +17,8 @@ app.url_map.strict_slashes = False
 @app.route("/states_list")
 def states_list():
     """ Return the list of states """
-    return render_template("7-states_list.html", states=states)
+    states_A_Z = sorted(list(states.values()), key=lambda att: att.name)
+    return render_template("7-states_list.html", states=states_A_Z)
 
 
 @app.teardown_appcontext
