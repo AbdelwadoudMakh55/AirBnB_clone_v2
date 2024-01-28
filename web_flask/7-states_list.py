@@ -16,11 +16,13 @@ app.url_map.strict_slashes = False
 
 @app.route("/states_list")
 def states_list():
+    """ Return the list of states """
     return render_template("7-states_list.html", states=states)
 
 
 @app.teardown_appcontext
-def teardown_appcontext(error=None):
+def teardown_appcontext(exception):
+    """ Closes the storage """
     storage.close()
 
 
