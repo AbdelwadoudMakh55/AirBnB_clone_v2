@@ -10,19 +10,20 @@ from models.state import State
 
 
 app = Flask(__name__)
-app.url_map.strict_slashes = False
 
 
 @app.teardown_appcontext
 def teardown_appcontext(exception):
-    """ Removing the session """
+    """ closing the storage """
     storage.close()
 
 
-@app.route("/cities_by_states")
-def states_list():
+@app.route("/cities_by_states", strict_slashes=False)
+def cities_by_state():
+    """ Listing the cities by state """
     states = storage.all(State)
-    return render_template("8-cities_by_states.html", states=states)
+    states_A_Z = sorted(list(states.values()), key=lambda att: att.name)
+    return render_template("8-cities_by_states.html", states=states_A_Z)
 
 
 if __name__ == '__main__':
