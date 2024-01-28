@@ -21,8 +21,9 @@ def teardown_appcontext(exception):
 @app.route("/cities_by_states", strict_slashes=False)
 def cities_by_state():
     """ Listing the cities by state """
-    states = storage.all(State)
-    states_A_Z = sorted(list(states.values()), key=lambda att: att.name)
+    states = storage.all(State).values()
+    states_A_Z = sorted(list(states), key=lambda att: att.name)
+    print(states_A_Z)
     return render_template("8-cities_by_states.html", states=states_A_Z)
 
 
