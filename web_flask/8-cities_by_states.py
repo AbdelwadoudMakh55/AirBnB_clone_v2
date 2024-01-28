@@ -9,13 +9,13 @@ from models import storage
 from models.state import State
 
 
-states = storage.all(State)
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 
 @app.route("/cities_by_states")
 def states_list():
+    states = storage.all(State)
     return render_template("8-cities_by_states.html", states=states)
 
 
