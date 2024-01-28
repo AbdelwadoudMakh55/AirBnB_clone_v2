@@ -7,3 +7,4 @@ main_delete.py
 *.tgz
 test.py
 *main.py
+7-dump.sql
